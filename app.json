@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "B24 Messenger",
+    "slug": "b24-messenger",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.b24.messenger"
+    },
+    "assetBundlePatterns": ["**/*"]
+  }
+}

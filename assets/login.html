@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>B24 — Sign In</title>
+<style>
+  *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; font-family:sans-serif; }
+  body{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:#0a0a12; padding:40px 20px; color:#f2f1fb; line-height:1.5;
+  }
+  .wrap{ width:100%; max-width:420px; }
+  .brand{ display:flex; align-items:center; gap:12px; margin-bottom:36px; }
+  .brand .mark{ width:46px; height:46px; border-radius:13px; background:linear-gradient(135deg,#7c5cff,#9b6bff); display:flex; align-items:center; justify-content:center; font-weight:800; color:white; }
+  .brand .name{ font-weight:700; font-size:20px; }
+  .brand .name span{ color:#c8b6ff; font-weight:500; font-size:12px; display:block; text-transform:uppercase; }
+  .card{ background:rgba(255,255,255,0.07); backdrop-filter:blur(22px); border:1px solid rgba(255,255,255,0.14); border-radius:30px; padding:36px 30px 32px; }
+  .tabs{ display:flex; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:4px; margin-bottom:32px; }
+  .tab{ flex:1; text-align:center; padding:11px 0; border-radius:11px; font-size:13.5px; font-weight:600; color:rgba(242,241,251,0.55); cursor:pointer; }
+  .tab.active{ background:rgba(255,255,255,0.14); color:#fff; }
+  h1{ font-size:23px; font-weight:700; margin-bottom:6px; }
+  .sub{ font-size:13px; color:rgba(242,241,251,0.55); margin-bottom:30px; }
+  .field{ margin-bottom:19px; }
+  .field label{ display:block; font-size:11px; font-weight:600; text-transform:uppercase; color:rgba(242,241,251,0.45); margin-bottom:8px; }
+  .input-shell{ display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); border-radius:14px; padding:2px 16px; }
+  .input-shell input{ flex:1; background:none; border:none; outline:none; color:#fff; font-size:14.5px; padding:15px 0; }
+  .input-shell .handle-suffix{ font-size:12.5px; color:rgba(242,241,251,0.4); }
+  .btn-primary{ width:100%; padding:16px; border-radius:15px; border:none; background:linear-gradient(135deg,#7c5cff,#9b6bff); color:#fff; font-size:14.5px; font-weight:700; cursor:pointer; margin-top:6px; }
+  .btn-primary:disabled{ opacity:0.6; }
+  .msg{ font-size:12.5px; margin:-6px 2px 20px; min-height:0; }
+  .msg.error{ color:#ff9d9d; }
+  .msg.success{ color:#9dffb0; }
+  .footnote{ text-align:center; margin-top:32px; font-size:12.5px; color:rgba(242,241,251,0.5); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark">B24</div>
+    <div class="name">B24<span>Uganda · Kampala</span></div>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <div class="tab active" id="tabLogin">Sign In</div>
+      <div class="tab" id="tabSignup">Create Account</div>
+    </div>
+
+    <div id="loginForm">
+      <h1>Welcome back</h1>
+      <div class="sub">Sign in to continue to your B24 account</div>
+      <div class="field">
+        <label>Username</label>
+        <div class="input-shell">
+          <input type="text" id="loginUsername" placeholder="kelly" autocomplete="username" />
+          <span class="handle-suffix">@b24.me</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="input-shell">
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+      </div>
+      <div class="msg" id="loginMsg"></div>
+      <button class="btn-primary" id="loginBtn"><span class="btn-label">Sign In</span></button>
+    </div>
+
+    <div id="signupForm" style="display:none">
+      <h1>Create your account</h1>
+      <div class="sub">Join B24 — one account for every app</div>
+      <div class="field">
+        <label>Username</label>
+        <div class="input-shell">
+          <input type="text" id="signupUsername" placeholder="choose a username" autocomplete="username" />
+          <span class="handle-suffix">@b24.me</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="input-shell">
+          <input type="password" id="signupPassword" placeholder="at least 8 characters" autocomplete="new-password" />
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:20px;">
+        <label>Confirm Password</label>
+        <div class="input-shell">
+          <input type="password" id="signupConfirm" placeholder="repeat password" autocomplete="new-password" />
+        </div>
+      </div>
+      <div class="msg" id="signupMsg"></div>
+      <button class="btn-primary" id="signupBtn"><span class="btn-label">Create Account</span></button>
+    </div>
+
+    <div id="welcomeScreen" style="display:none; text-align:center; padding:10px 0 4px;">
+      <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#7c5cff,#c084fc);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-weight:700;font-size:22px;" id="welcomeAvatar"></div>
+      <h1 id="welcomeName" style="margin-bottom:2px;"></h1>
+      <div class="sub" id="welcomeHandle"></div>
+      <button class="btn-primary" id="continueBtn">Continue to App</button>
+    </div>
+
+    <div class="footnote" id="footnote">By continuing you agree to B24's Terms & Privacy Policy</div>
+  </div>
+</div>
+
+<script>
+  const API_BASE = 'https://Brighton233j-Messenger-back-database.hf.space';
+
+  const tabLogin = document.getElementById('tabLogin');
+  const tabSignup = document.getElementById('tabSignup');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const tabsEl = document.querySelector('.tabs');
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const footnote = document.getElementById('footnote');
+
+  let session = null;
+
+  function showTab(which) {
+    if (which === 'login') {
+      tabLogin.classList.add('active'); tabSignup.classList.remove('active');
+      loginForm.style.display = 'block'; signupForm.style.display = 'none';
+    } else {
+      tabSignup.classList.add('active'); tabLogin.classList.remove('active');
+      signupForm.style.display = 'block'; loginForm.style.display = 'none';
+    }
+  }
+  tabLogin.addEventListener('click', () => showTab('login'));
+  tabSignup.addEventListener('click', () => showTab('signup'));
+
+  function setMsg(el, text, type) {
+    el.textContent = text || '';
+    el.className = 'msg' + (type ? ' ' + type : '');
+  }
+  function setLoading(btn, loading, label) {
+    btn.disabled = loading;
+    const labelEl = btn.querySelector('.btn-label');
+    if (labelEl) labelEl.textContent = loading ? 'Please wait…' : label;
+  }
+
+  async function callAuth(path, username, password) {
+    const res = await fetch(API_BASE + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    let data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (!res.ok) {
+      const errMsg = (data && (data.error || data.message)) || `Request failed (${res.status})`;
+      throw new Error(errMsg);
+    }
+    return data;
+  }
+
+  function showWelcome(user) {
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'none';
+    tabsEl.style.display = 'none';
+    footnote.style.display = 'none';
+    welcomeScreen.style.display = 'block';
+    document.getElementById('welcomeAvatar').textContent = (user.username || '?')[0].toUpperCase();
+    document.getElementById('welcomeName').textContent = 'Hey, ' + user.username;
+    document.getElementById('welcomeHandle').textContent = user.handle || (user.username + '@b24.me');
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('loginBtn');
+    const msgEl = document.getElementById('loginMsg');
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if (!username || !password) { setMsg(msgEl, 'Enter your username and password.', 'error'); return; }
+    setMsg(msgEl, '', '');
+    setLoading(btn, true, 'Sign In');
+    try {
+      const data = await callAuth('/auth/login', username, password);
+      session = { token: data.token, user: data.user };
+      setMsg(msgEl, 'Signed in!', 'success');
+      showWelcome(data.user);
+    } catch (err) {
+      setMsg(msgEl, err.message || 'Sign in failed.', 'error');
+    } finally {
+      setLoading(btn, false, 'Sign In');
+    }
+  });
+
+  document.getElementById('signupBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('signupBtn');
+    const msgEl = document.getElementById('signupMsg');
+    const username = document.getElementById('signupUsername').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirm = document.getElementById('signupConfirm').value;
+    if (!username || !password || !confirm) { setMsg(msgEl, 'Fill in all fields.', 'error'); return; }
+    if (password.length < 8) { setMsg(msgEl, 'Password must be at least 8 characters.', 'error'); return; }
+    if (password !== confirm) { setMsg(msgEl, 'Passwords do not match.', 'error'); return; }
+    setMsg(msgEl, '', '');
+    setLoading(btn, true, 'Create Account');
+    try {
+      const data = await callAuth('/auth/signup', username, password);
+      session = { token: data.token, user: data.user };
+      setMsg(msgEl, 'Account created!', 'success');
+      showWelcome(data.user);
+    } catch (err) {
+      setMsg(msgEl, err.message || 'Sign up failed.', 'error');
+    } finally {
+      setLoading(btn, false, 'Create Account');
+    }
+  });
+
+  // This is the "Continue to App" step — hands the session to the native app
+  document.getElementById('continueBtn').addEventListener('click', () => {
+    if (window.ReactNativeWebView && session) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'AUTH_SUCCESS',
+        token: session.token,
+        user: session.user
+      }));
+    }
+  });
+</script>
+</body>
+</html>

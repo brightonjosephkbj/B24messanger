@@ -1,0 +1,29 @@
+name: B24 Messenger CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Expo doctor (config sanity check)
+        run: npx expo-doctor || true
+
+      - name: Type/lint check
+        run: npx expo export --platform web --output-dir /tmp/export-check

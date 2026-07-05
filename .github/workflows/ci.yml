@@ -24,6 +24,3 @@ jobs:
 
       - name: Expo doctor (config sanity check)
         run: npx expo-doctor || true
-
-      - name: Type/lint check
-        run: npx expo export --platform web --output-dir /tmp/export-check

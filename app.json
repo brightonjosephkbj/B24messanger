@@ -7,7 +7,6 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "com.b24.messenger"
-    },
-    "assetBundlePatterns": ["**/*"]
+    }
   }
 }
